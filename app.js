@@ -6,12 +6,13 @@ const { db, Page, User } = require("./models");
 const wikiRouter = require("./routes/wiki");
 const userRouter = require("./routes/users");
 const app = express();
-app.use("/wiki", wikiRouter);
-app.use("/users", userRouter);
 
 app.use(morgan("dev"));
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
+app.use("/wiki", wikiRouter);
+app.use("/users", userRouter);
 
 db.authenticate().then(() => {
   console.log("connected to the database");
